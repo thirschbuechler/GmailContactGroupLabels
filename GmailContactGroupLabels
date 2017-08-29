@@ -1,3 +1,6 @@
+//GmailContactGroupLabels G-apps script
+//t.hirschbuechler, 2017
+//installation is documented in Readme.md
 //may appear in your gmail account activity (run by a 10.*.*.*	address, corresponding to an internal google-server)
 
 function applyGroupLabels()
@@ -5,7 +8,7 @@ function applyGroupLabels()
   var mygroup = "ContactsGroupName";//change right side of this line to match your contact group
   var mylabel = GmailApp.getUserLabelByName("GmailGroupName");//this as well, inserting the gmail label
   
-  var contacts = ContactsApp.getContactGroup(mygroup).getContacts();//contacts.getEmails(i).getAddress()
+  var contacts = ContactsApp.getContactGroup(mygroup).getContacts();
   var emails = [];
   
   for (var i in contacts){
@@ -14,7 +17,6 @@ function applyGroupLabels()
       emails.push(EmailField[j].getAddress());
     }
   }
-  //Logger.log(emails);
   
 
   var threads = GmailApp.getInboxThreads();//get all Inbox threads (not Archive/Trash/Spam)
@@ -26,15 +28,11 @@ function applyGroupLabels()
         
         if (messages[k].getTo().indexOf(emails[j])>-1){
           threads[i].addLabel(mylabel);
-          //Logger.log("got one");
         }
         else if (messages[k].getFrom().indexOf(emails[j])>-1){
           threads[i].addLabel(mylabel);
-          //Logger.log("got one");
         }
-        else{
-            //nothing happens
-        }
+   
       }
     }// for j
   }// for i
